@@ -1,11 +1,24 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color ="danger">
     <ion-title>
-      About
+      Navigation
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-list>
+
+  <ion-item>
+    <ion-label floating>Destination</ion-label>
+    <ion-input type="text" ([ngMode1])="Destination"></ion-input>
+  </ion-item>
+
+</ion-list>
+<button ion-button full (click)="calculateAndDisplayRoute()">Go!</button>
+
+<div id = "map"></div>
+
+<!-- {{Destination}} - {{Destination}} -->
 
 </ion-content>
