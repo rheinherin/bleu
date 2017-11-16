@@ -123,8 +123,8 @@ export class NavPage {
           if (status === 'OK') {
             directionsDisplay.setDirections(response);
           } else {
-            console.log(that.MyLocation);
-            console.log(that.Destination);
+            console.log(this.MyLocation);
+            console.log(this.Destination);
             window.alert('Directions request failed due to ' + status);
           }
         });

@@ -6,12 +6,19 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
   <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
-    </ion-item>
-  </ion-list>
+
+  <ion-item>
+    <ion-label floating>Destination</ion-label>
+    <ion-input type="text" [(ngModel)]="Number"></ion-input>
+  </ion-item>
+
+</ion-list>
+<button ion-button full (click)="sendDataBT()">SEND!</button>
+
+<!-- <div #map id = "map"></div> -->
+
+<!-- {{Destination}} - {{Destination}} -->
+
 </ion-content>
