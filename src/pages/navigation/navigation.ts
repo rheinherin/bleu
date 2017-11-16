@@ -1,18 +1,22 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
-// declare var google;
+import { Geolocation } from '@ionic-native/geolocation';
 
-declare var google: any;
+declare var google;
+
+// declare var google: any;
 
 @Component({
   selector: 'page-nav',
   templateUrl: 'navigation.html'
 })
 export class NavPage {
-  Destination: any = '';
-  MyLocation: any;
+  // Destination: any = '';
+  // MyLocation: any;
 
-  @ViewChild('map') mapRef: ElementRef;
+  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('directionsPanel') directionsPanel: ElementRef;
+  map: any;
   // map: any;
 
 
@@ -20,114 +24,47 @@ export class NavPage {
 
   }
   ionViewDidLoad() {
-    let directionsService = new google.maps.DirectionsService;
-    let directionsDisplay = new google.maps.DirectionsRenderer;
+    this.loadMap();
+    this.startNavigating();
 
-    let that = this;
-    // this.showMap();
-    console.log(this.mapRef);
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        map.setCenter(pos);
-        that.MyLocation = new google.maps.LatLng(pos);
-
-      }, function() {
-
-      });
-    } else {
-      // Browser doesn't support Geolocation
     }
 
-    const map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 15
-    });
-    directionsDisplay.setMap(map);
-    const marker = new google.maps.Marker({
-      position: that.MyLocation,
-      map: map,
-      title:"Hello World!"
-    });
+    loadMap(){
 
-    // To add the marker to the map, call setMap();
-    marker.setMap(map);
-  }
+        let latLng = new google.maps.LatLng(-34.9290, 138.6010);
 
-  showMap() {
-    //location - lat long
-    const location = new google.maps.LatLng(51.507351, -0.127758)
-    const centerLatLng = new google.maps.LatLng(51.507351, 0.127758);
-
-    //map oprions
-    const options = {
-      center: centerLatLng,
-      zoon: 15,
-      streetViewControl: false,
-      mapTypeId: 'roadmap'
-  }
-
-  const map = new google.maps.Map(this.mapRef.nativeElement, options);
-  console.log("SHOWED");
-
-
-
-  this.addMarker(location, map);
-  }
-
-  addMarker(position, map) {
-    return new google.maps.Marker({
-      position,
-      map
-    });
-
-  }
-
-
-
-  calculateAndDisplayRoute() {
-        let that = this;
-        let directionsService = new google.maps.DirectionsService;
-        let directionsDisplay = new google.maps.DirectionsRenderer;
-        const map = new google.maps.Map(document.getElementById('map'), {
+        let mapOptions = {
+          center: latLng,
           zoom: 15,
-          center: {lat: 41.85, lng: -87.65}
-        });
-        directionsDisplay.setMap(map);
-
-
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-
-            map.setCenter(pos);
-            that.MyLocation = new google.maps.LatLng(pos);
-
-          }, function() {
-          });
-        } else {
-          // Browser doesn't support Geolocation
+          mapTypeId: google.maps.MapTypeId.ROADMAP
         }
 
+        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+    }
+
+    startNavigating(){
+
+        let directionsService = new google.maps.DirectionsService;
+        let directionsDisplay = new google.maps.DirectionsRenderer;
+
+        directionsDisplay.setMap(this.map);
+        directionsDisplay.setPanel(this.directionsPanel.nativeElement);
+
         directionsService.route({
-          origin: this.MyLocation,
-          destination: this.Destination,
-          travelMode: 'DRIVING'
-        }, function(response, status) {
-          if (status === 'OK') {
-            directionsDisplay.setDirections(response);
-          } else {
-            console.log(this.MyLocation);
-            console.log(this.Destination);
-            window.alert('Directions request failed due to ' + status);
-          }
+            origin: 'adelaide',
+            destination: 'adelaide oval',
+            travelMode: google.maps.TravelMode['DRIVING']
+        }, (res, status) => {
+
+            if(status == google.maps.DirectionsStatus.OK){
+                directionsDisplay.setDirections(res);
+            } else {
+                console.warn(status);
+            }
+
         });
-      }
+
+    }
 
 }

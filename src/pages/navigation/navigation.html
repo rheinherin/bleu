@@ -7,18 +7,12 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
+  <ion-card>
+        <ion-card-content>
+            <div #directionsPanel></div>
+        </ion-card-content>
+    </ion-card>
 
-  <ion-item>
-    <ion-label floating>Destination</ion-label>
-    <ion-input type="text" [(ngModel)]="Destination"></ion-input>
-  </ion-item>
-
-</ion-list>
-<button ion-button full (click)="calculateAndDisplayRoute()">Go!</button>
-
-<div #map id = "map"></div>
-
-<!-- {{Destination}} - {{Destination}} -->
+    <div #map id="map"></div> 
 
 </ion-content>
