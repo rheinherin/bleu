@@ -29,6 +29,8 @@ export class LightPage {
 
   sendDataBT(this) {
     console.log(this.Number);//getdata
+    this.bluetoothSerial.write(this.Number, this.success, this.fail);
+    console.log("success");
 
     // that.bluetoothSerial.write(this.Number, success, failure);//send data
 
