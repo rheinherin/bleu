@@ -40,6 +40,8 @@ export class NavPage {
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
+      this.addMarker();
+
     }, (err) => {
       console.log(err);
     });
