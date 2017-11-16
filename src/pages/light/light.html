@@ -9,13 +9,40 @@
 <ion-content padding>
   <ion-list>
 
-  <ion-item>
-    <ion-label floating>Destination</ion-label>
-    <ion-input type="text" [(ngModel)]="Number"></ion-input>
+    <ion-item>
+      <ion-label floating>Number</ion-label>
+      <ion-input type="text" [(ngModel)]="Number"></ion-input>
+    </ion-item>
+    <button ion-button full (click)="sendDataBT()">SEND!</button>
+
+
+
+    <ion-list-header>
+      availlable Devices
+    </ion-list-header>
+
+
+
+
+  <button ion-button block (click)="startScanning()">scan</button>
+  <ion-list-header>
+    Paired Devices
+  </ion-list-header>
+  <ion-item *ngFor="let device of pairedDevices">
+    {{device.name}}
   </ion-item>
+  <button ion-button block (click)="disconnect()">Disconnect</button>
+  <ion-list-header>
+    availlable Devices
+  </ion-list-header>
+  <ion-item *ngFor='let device of unpairedDevices'>
+    <span (click)="selectDevice(device.address)">
+      {{device.name}}
+    </span>
+  </ion-item>
+  <ion-spinner name="crescent" *ngIf="gettingDevices"></ion-spinner>
 
 </ion-list>
-<button ion-button full (click)="sendDataBT()">SEND!</button>
 
 <!-- <div #map id = "map"></div> -->
 
