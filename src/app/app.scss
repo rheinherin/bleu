@@ -16,4 +16,30 @@
 // automatically applied to the <body> element in the app.
 ion-title {
   text-align: center;
+  font-weight: bolder;
+  // text-transform: uppercase;
+}
+ion-navbar {
+  background-image: rgba(0,0,0,0);
+  height: 80px;
+  box-shadow: rgba(0,0,0,0);
+}
+img {
+  width: 80%;
+
+  margin-top: 5rem;
+  transition-property: all;
+  transition-duration: 0.5s;
+}
+// ion-tabs {
+//   background-image: rgba(0,0,0,0);
+//
+// }
+@font-face{
+  font-family: Poppins;
+  src: url('../assets/fonts/Poppins.woff2') format('woff2');
+}
+* {
+  font-family: Poppins;
+  text-align: center;
 }

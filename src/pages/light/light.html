@@ -1,5 +1,5 @@
-<ion-header>
-  <ion-navbar color ="primary">
+<ion-header no-border>
+  <ion-navbar color ="white">
     <ion-title>
       Light
     </ion-title>
@@ -7,16 +7,14 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
-
+<ion-list>
     <ion-item>
-      <ion-label>Turn on the light</ion-label>
       <ion-toggle [(ngModel)]="light" (ionChange)="getTF()" checked="false"></ion-toggle>
     </ion-item>
-
-
-
+    <img [(src)]="imgSrc">
 </ion-list>
+
+
 
 <!-- <div #map id = "map"></div> -->
 
