@@ -12,6 +12,7 @@ import { AlertController } from 'ionic-angular';
 })
 export class LightPage {
   Number: any;
+  light:Boolean;
 
   unpairedDevices: any;
   pairedDevices: any;
@@ -27,6 +28,17 @@ export class LightPage {
 
   }
 
+  getTF() {
+    let that = this;
+    if(this.light) {
+
+      this.lightOn();
+    }
+    else{
+      this.lightOff();
+    }
+  }
+
   sendDataBT(this) {
     console.log(this.Number);//getdata
     this.bluetoothSerial.write(this.Number, this.success, this.fail);
@@ -34,6 +46,15 @@ export class LightPage {
 
     // that.bluetoothSerial.write(this.Number, success, failure);//send data
 
+  }
+
+  lightOn(this) {
+    this.bluetoothSerial.write('l', this.success, this.fail);
+    console.log("success");
+  }
+  lightOff(this) {
+    this.bluetoothSerial.write('m', this.success, this.fail);
+    console.log("success");
   }
 
   startScanning() {
