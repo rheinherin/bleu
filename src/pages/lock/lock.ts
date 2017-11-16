@@ -27,10 +27,10 @@ export class LockPage {
     let that = this;
     if(this.lock) {
 
-      this.lockOn();
+      this.lockOff();
     }
     else{
-      this.lockOff();
+      this.lockOn();
     }
   }
 
