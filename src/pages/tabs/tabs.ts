@@ -4,6 +4,8 @@ import { NavPage } from '../navigation/navigation';
 import { RecPage } from '../records/records';
 import { LightPage } from '../light/light';
 import { LockPage } from '../lock/lock';
+import { BtPage } from '../bluetooth/bluetooth';
+
 
 
 @Component({
@@ -15,6 +17,7 @@ export class TabsPage {
   tab2Root = RecPage;
   tab3Root = LightPage;
   tab4Root = LockPage;
+  tab5Root = BtPage;
 
   constructor() {
 

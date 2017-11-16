@@ -7,6 +7,8 @@ import { NavPage } from '../pages/navigation/navigation';
 import { RecPage } from '../pages/records/records';
 import { LightPage } from '../pages/light/light';
 import { LockPage } from '../pages/lock/lock';
+import { BtPage } from '../pages/bluetooth/bluetooth';
+
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -21,6 +23,7 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
     RecPage,
     LightPage,
     LockPage,
+    BtPage,
     TabsPage
   ],
   imports: [
@@ -34,6 +37,7 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
     RecPage,
     LightPage,
     LockPage,
+    BtPage,
     TabsPage
   ],
   providers: [
