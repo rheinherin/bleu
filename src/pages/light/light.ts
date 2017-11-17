@@ -34,24 +34,23 @@ export class LightPage {
 
   ionViewDidEnter(this) {
     this.bluetoothSerial.write('r', this.success, this.fail);//ask arduino to rtn status -- 'r' to rtn light data / 'R' to rtn lock data
-    this.Status = this.bluetoothSerial.read(this.readsuccess, this.readfail);//get status
-    console.log(this.Status);
-
+    this.bluetoothSerial.read(this.readsuccess, this.readfail);//get status
 
   }
-  afterRead() {
-    if(this.Status == '1') {
+  afterRead(data) {
+    this.OnOff = data;
+    if(data == '1') {
       this.OnOff = this.Status;
       this.initOn();
     }
-    else if (this.Status == '0') {
+    else if (data == '0') {
       this.OnOff = this.Status;
       this.initOff();
     }
 
   }
 
-  readsuccess = (data) => {this.afterRead();}
+  readsuccess = (data) => {this.afterRead(data);}
   readfail = (error) => console.log("err");
 
 
@@ -101,13 +100,19 @@ export class LightPage {
     let that = this;
     if(this.auto) {//true - automatically
       this.setAutomatic();
+      this.imgSrc = "assets/imgs/auto.svg";
+      this.OnOff = "Automatic mode";
     }
     else{
       this.setManual();
+      this.imgSrc = "assets/imgs/off.svg";
+      this.OnOff = "Off";
     }
   }
   setManual(this) {
     this.bluetoothSerial.write('n', this.success, this.fail);
+    this.bluetoothSerial.write('m', this.success, this.fail);//turn off the light again
+
     console.log('MANuall');
   }
   setAutomatic(this) {

@@ -29,25 +29,23 @@ export class LockPage {
 
   ionViewDidEnter(this) {
     this.bluetoothSerial.write('R', this.success, this.fail);//ask arduino to rtn status -- 'r' to rtn light data / 'R' to rtn lock data
-    this.Status = this.bluetoothSerial.read(this.readsuccess, this.readfail);//get status
-    console.log(this.Status);
-
+    this.bluetoothSerial.read(this.readsuccess, this.readfail);//get status
 
   }
-  afterRead() {
-    this.OnOff = this.Status;
-    if(this.Status == '1') {
+  afterRead(data) {
+    this.OnOff = data;
+    if(data == '1') {
       this.OnOff = this.Status;
       this.initOn();
     }
-    else if (this.Status == '0') {
+    else if (data == '0') {
       this.OnOff = this.Status;
       this.initOff();
     }
 
   }
 
-  readsuccess = (data) => {this.afterRead();}
+  readsuccess = (data) => {this.afterRead(data);}
   readfail = (error) => console.log("err");
 
   getTF() {
