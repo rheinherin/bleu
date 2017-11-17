@@ -7,11 +7,13 @@
 </ion-header>
 
 <ion-content padding>
-<ion-list>
+<ion-list no-lines>
+    <ion-label #onOff>{{OnOff}}</ion-label>
+    <img [(src)]="imgSrc">
     <ion-item>
       <ion-toggle [(ngModel)]="light" (ionChange)="getTF()" checked="false"></ion-toggle>
     </ion-item>
-    <img [(src)]="imgSrc">
+
 </ion-list>
 
 

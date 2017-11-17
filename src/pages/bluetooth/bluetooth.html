@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
+  <ion-list no-lines>
     <ion-list-header>
       availlable Devices
     </ion-list-header>
@@ -15,14 +15,14 @@
 
 
 
-  <button ion-button block (click)="startScanning()">scan</button>
+  <button round ion-button block (click)="startScanning()">scan</button>
   <ion-list-header>
     Paired Devices
   </ion-list-header>
   <ion-item *ngFor="let device of pairedDevices">
     {{device.name}}
   </ion-item>
-  <button ion-button block (click)="disconnect()">Disconnect</button>
+  <button round ion-button block (click)="disconnect()">Disconnect</button>
   <ion-list-header>
     availlable Devices
   </ion-list-header>

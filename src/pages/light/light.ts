@@ -13,7 +13,9 @@ import { AlertController } from 'ionic-angular';
 export class LightPage {
   Number: any;
   light:Boolean;
-  imgSrc:string="../assets/imgs/off.svg";
+  imgSrc:string="assets/imgs/off.svg";
+  Status: any;
+  OnOff: string="Off";
 
   unpairedDevices: any;
   pairedDevices: any;
@@ -29,16 +31,41 @@ export class LightPage {
 
   }
 
+  ionViewDidEnter(this) {
+    this.bluetoothSerial.write('r', this.success, this.fail);//ask arduino to rtn status -- 'r' to rtn light data / 'R' to rtn lock data
+    this.Status = this.bluetoothSerial.read(this.readsuccess, this.readfail);//get status
+    console.log(this.Status);
+
+
+  }
+  afterRead() {
+    if(this.Status == '1') {
+      this.initOn();
+      this.OnOff = this.Status;
+    }
+    else if (this.Status == '0') {
+      this.initOff();
+      this.OnOff = this.Status;
+    }
+
+  }
+
+  readsuccess = (data) => this.afterRead();
+  readfail = (error) => console.log("err");
+
+
   getTF() {
     let that = this;
     if(this.light) {
 
       this.lightOn();
-      this.imgSrc = "../assets/imgs/on.svg";
+      this.imgSrc = "assets/imgs/on.svg";
+      this.OnOff = "On";
     }
     else{
       this.lightOff();
-      this.imgSrc = "../assets/imgs/off.svg";
+      this.imgSrc = "assets/imgs/off.svg";
+      this.OnOff = "Off";
     }
   }
 
@@ -61,78 +88,16 @@ export class LightPage {
     console.log("success2");
 
   }
-
-  startScanning() {
-    this.pairedDevices = null;
-    this.unpairedDevices = null;
-    this.gettingDevices = true;
-    this.bluetoothSerial.discoverUnpaired().then((success) => {
-      this.unpairedDevices = success;
-      this.gettingDevices = false;
-      success.forEach(element => {
-        // alert(element.name);
-      });
-    },
-      (err) => {
-        console.log(err);
-      })
-
-    this.bluetoothSerial.list().then((success) => {
-      this.pairedDevices = success;
-    },
-      (err) => {
-
-      })
+  initOn() {
+    this.imgSrc = "assets/imgs/on.svg";
   }
-  success = (data) => alert(data);
-  fail = (error) => alert(error);
-
-  selectDevice(address: any) {
-
-    let alert = this.alertCtrl.create({
-      title: 'Connect',
-      message: 'Do you want to connect with?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Connect',
-          handler: () => {
-            this.bluetoothSerial.connect(address).subscribe(this.success, this.fail);
-          }
-        }
-      ]
-    });
-    alert.present();
-
+  initOff() {
+    this.imgSrc = "assets/imgs/off.svg";
   }
 
-  disconnect() {
-    let alert = this.alertCtrl.create({
-      title: 'Disconnect?',
-      message: 'Do you want to Disconnect?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Disconnect',
-          handler: () => {
-            this.bluetoothSerial.disconnect();
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
+
+  success = (data) => console.log("success");
+  fail = (error) => console.log("err");
+
 
 }
