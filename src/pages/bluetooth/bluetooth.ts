@@ -60,6 +60,7 @@ export class BtPage {
   }
   success = (data) => alert(data);
   fail = (error) => alert(error);
+  successconnect = (data) => {alert(data); this.sendStartAscii();}
 
   selectDevice(address: any) {
 
@@ -77,13 +78,17 @@ export class BtPage {
         {
           text: 'Connect',
           handler: () => {
-            this.bluetoothSerial.connect(address).subscribe(this.success, this.fail);
+            this.bluetoothSerial.connect(address).subscribe(this.successconnect, this.fail);
           }
         }
       ]
     });
     alert.present();
 
+  }
+
+  sendStartAscii(this) {
+    this.bluetoothSerial.write('s', this.success, this.fail);
   }
 
   disconnect() {

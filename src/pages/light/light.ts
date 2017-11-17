@@ -51,7 +51,7 @@ export class LightPage {
 
   }
 
-  readsuccess = (data) => this.afterRead();
+  readsuccess = (data) => {this.afterRead();}
   readfail = (error) => console.log("err");
 
 

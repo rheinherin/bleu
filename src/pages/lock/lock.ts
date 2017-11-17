@@ -35,6 +35,7 @@ export class LockPage {
 
   }
   afterRead() {
+    this.OnOff = this.Status;
     if(this.Status == '1') {
       this.OnOff = this.Status;
       this.initOn();
@@ -46,7 +47,7 @@ export class LockPage {
 
   }
 
-  readsuccess = (data) => this.afterRead();
+  readsuccess = (data) => {this.afterRead();}
   readfail = (error) => console.log("err");
 
   getTF() {
