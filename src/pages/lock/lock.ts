@@ -81,6 +81,12 @@ export class LockPage {
     this.bluetoothSerial.write('1', this.success, this.fail);
     console.log("success");
   }
+  initOn() {
+    this.imgSrc = "assets/imgs/on.svg";
+  }
+  initOff() {
+    this.imgSrc = "assets/imgs/off.svg";
+  }
 
 
   success = (data) => console.log("success");
