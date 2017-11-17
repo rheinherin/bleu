@@ -33,7 +33,7 @@ export class LockPage {
 
   }
   afterRead(data) {
-    this.OnOff = data;
+
     if(data == '1') {
       this.OnOff = this.Status;
       this.initOn();
