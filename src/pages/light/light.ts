@@ -40,12 +40,12 @@ export class LightPage {
   }
   afterRead() {
     if(this.Status == '1') {
-      this.initOn();
       this.OnOff = this.Status;
+      this.initOn();
     }
     else if (this.Status == '0') {
-      this.initOff();
       this.OnOff = this.Status;
+      this.initOff();
     }
 
   }

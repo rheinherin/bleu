@@ -8,8 +8,9 @@
 
 <ion-content padding>
 <ion-list no-lines>
-    <ion-label #onOff>{{OnOff}}</ion-label>
     <img [(src)]="imgSrc">
+    <h1 #onOff>{{OnOff}}</h1>
+
     <ion-item>
       <ion-toggle [(ngModel)]="light" (ionChange)="getTF()" checked="false"></ion-toggle>
     </ion-item>
