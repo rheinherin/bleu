@@ -11,6 +11,10 @@ export class LockPage {
   Number: any;
   lock:Boolean;
 
+  imgSrc:string="assets/imgs/off.svg";
+  Status: string ="";
+  OnOff: string="Unlocked";
+
   unpairedDevices: any;
   pairedDevices: any;
   gettingDevices: Boolean;
@@ -23,14 +27,40 @@ export class LockPage {
 
   }
 
+  ionViewDidEnter(this) {
+    this.bluetoothSerial.write('R', this.success, this.fail);//ask arduino to rtn status -- 'r' to rtn light data / 'R' to rtn lock data
+    this.Status = this.bluetoothSerial.read(this.readsuccess, this.readfail);//get status
+    console.log(this.Status);
+
+
+  }
+  afterRead() {
+    if(this.Status == '1') {
+      this.OnOff = this.Status;
+      this.initOn();
+    }
+    else if (this.Status == '0') {
+      this.OnOff = this.Status;
+      this.initOff();
+    }
+
+  }
+
+  readsuccess = (data) => this.afterRead();
+  readfail = (error) => console.log("err");
+
   getTF() {
     let that = this;
     if(this.lock) {
 
-      this.lockOff();
+      this.lockOn();
+      this.imgSrc = "assets/imgs/on.svg";
+      this.OnOff = "Locked";
     }
     else{
-      this.lockOn();
+      this.lockOff();
+      this.imgSrc = "assets/imgs/off.svg";
+      this.OnOff = "Unlocked";
     }
   }
 
@@ -44,86 +74,16 @@ export class LockPage {
   }
 
   lockOn(this) {
-    this.bluetoothSerial.write('1', this.success, this.fail);
-    console.log("success");
-  }
-  lockOff(this) {
     this.bluetoothSerial.write('0', this.success, this.fail);
     console.log("success");
   }
-
-  startScanning() {
-    this.pairedDevices = null;
-    this.unpairedDevices = null;
-    this.gettingDevices = true;
-    this.bluetoothSerial.discoverUnpaired().then((success) => {
-      this.unpairedDevices = success;
-      this.gettingDevices = false;
-      success.forEach(element => {
-        // alert(element.name);
-      });
-    },
-      (err) => {
-        console.log(err);
-      })
-
-    this.bluetoothSerial.list().then((success) => {
-      this.pairedDevices = success;
-    },
-      (err) => {
-
-      })
-  }
-  success = (data) => alert(data);
-  fail = (error) => alert(error);
-
-    selectDevice(address: any) {
-
-    let alert = this.alertCtrl.create({
-      title: 'Connect',
-      message: 'Do you want to connect with?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Connect',
-          handler: () => {
-            this.bluetoothSerial.connect(address).subscribe(this.success, this.fail);
-          }
-        }
-      ]
-    });
-    alert.present();
-
+  lockOff(this) {
+    this.bluetoothSerial.write('1', this.success, this.fail);
+    console.log("success");
   }
 
-  disconnect() {
-    let alert = this.alertCtrl.create({
-      title: 'Disconnect?',
-      message: 'Do you want to Disconnect?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Disconnect',
-          handler: () => {
-            this.bluetoothSerial.disconnect();
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
 
+  success = (data) => console.log("success");
+  fail = (error) => console.log("err");
 
 }

@@ -7,9 +7,12 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
+  <ion-list no-lines>
+    <img [(src)]="imgSrc">
+    <h1 #onOff>{{OnOff}}</h1>
+
     <ion-item>
-      <ion-label>Unlock</ion-label>
+      <ion-label>Lock</ion-label>
       <ion-toggle [(ngModel)]="lock" (ionChange)="getTF()" checked="false"></ion-toggle>
     </ion-item>
   </ion-list>

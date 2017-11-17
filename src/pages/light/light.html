@@ -12,8 +12,15 @@
     <h1 #onOff>{{OnOff}}</h1>
 
     <ion-item>
+      <ion-label>Lit up automatically</ion-label>
+      <ion-toggle [(ngModel)]="auto" (ionChange)="sendAuto()" checked="false"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Lit up</ion-label>
+
       <ion-toggle [(ngModel)]="light" (ionChange)="getTF()" checked="false"></ion-toggle>
     </ion-item>
+
 
 </ion-list>
 

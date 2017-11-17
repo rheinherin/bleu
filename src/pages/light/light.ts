@@ -13,8 +13,9 @@ import { AlertController } from 'ionic-angular';
 export class LightPage {
   Number: any;
   light:Boolean;
+  auto:Boolean;
   imgSrc:string="assets/imgs/off.svg";
-  Status: any;
+  Status: string ="";
   OnOff: string="Off";
 
   unpairedDevices: any;
@@ -93,6 +94,25 @@ export class LightPage {
   }
   initOff() {
     this.imgSrc = "assets/imgs/off.svg";
+  }
+
+
+  sendAuto() {
+    let that = this;
+    if(this.auto) {//true - automatically
+      this.setAutomatic();
+    }
+    else{
+      this.setManual();
+    }
+  }
+  setManual(this) {
+    this.bluetoothSerial.write('n', this.success, this.fail);
+    console.log('MANuall');
+  }
+  setAutomatic(this) {
+    this.bluetoothSerial.write('t', this.success, this.fail);
+    console.log('AUTOmaticccc');
   }
 
 
