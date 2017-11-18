@@ -8,8 +8,8 @@ import { DataProvider } from "../../providers/data/data";
 })
 export class RecPage {
   public localData: number;
-  Kcal: number;
-  Time: number;
+  Kcal: string;
+  Time: string;
 
 
   constructor(public navCtrl: NavController, public data:DataProvider) {
