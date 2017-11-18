@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+import { DataProvider } from "../../providers/data/data";
 
 declare var google;
 
@@ -23,8 +24,9 @@ export class NavPage {
   inner: any;
   Time: number = 0;
   // map: any;
-  constructor(private bluetoothSerial: BluetoothSerial, public navCtrl: NavController, public geolocation: Geolocation) {
+  constructor(private bluetoothSerial: BluetoothSerial, public navCtrl: NavController, public geolocation: Geolocation, public data:DataProvider) {
     bluetoothSerial.enable();
+    this.data.paramData = 0;
   }
   ionViewDidLoad() {
     this.loadMap();
@@ -127,7 +129,7 @@ export class NavPage {
 
           }
 
-        }, 700);
+        }, 750);
 
         // console.log(this.directionsPanel.nativeElement);
         // setTimeout(this.console(), 60000);
@@ -201,7 +203,8 @@ startCycling(){
        eDate = new Date().getTime();
        var resDate = (eDate - sDate) / 1000;
        console.log("time: " + resDate );
-       that.Time = resDate;
+       this.Time = resDate;
+       that.data.paramData = this.Time;
       }
     }, 10000);
 

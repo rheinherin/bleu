@@ -16,6 +16,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
 import { Geolocation } from '@ionic-native/geolocation';
+import { DataProvider } from '../providers/data/data';
+import { Injectable } from '@angular/core';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     SplashScreen,
     BluetoothSerial,
     Geolocation,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    DataProvider
   ]
 })
 export class AppModule {}
