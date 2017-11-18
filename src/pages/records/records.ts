@@ -18,7 +18,7 @@ export class RecPage {
   ionViewDidEnter() {
     this.localData = this.data.paramData;
     this.Time = (this.localData/3600).toFixed(2);
-    this.Kcal = (this.Time*200).toFixed(2);
+    this.Kcal = (this.localData*200).toFixed(2);
   }
 
 }
