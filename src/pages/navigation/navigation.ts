@@ -21,6 +21,7 @@ export class NavPage {
   Sign: string = '';
   Length: number = 0;
   inner: any;
+  Time: number = 0;
   // map: any;
   constructor(private bluetoothSerial: BluetoothSerial, public navCtrl: NavController, public geolocation: Geolocation) {
     bluetoothSerial.enable();
@@ -126,7 +127,7 @@ export class NavPage {
 
           }
 
-        }, 600);
+        }, 700);
 
         // console.log(this.directionsPanel.nativeElement);
         // setTimeout(this.console(), 60000);
@@ -163,6 +164,8 @@ console() {
 }
 
 startCycling(){
+  var sDate = new Date().getTime();
+  var eDate;
   let that = this;
   this.startNavigating(0);
 
@@ -195,6 +198,10 @@ startCycling(){
        clearInterval(Interval);
        console.log("END");
        that.endNavigation();
+       eDate = new Date().getTime();
+       var resDate = (eDate - sDate) / 1000;
+       console.log("time: " + resDate );
+       that.Time = resDate;
       }
     }, 10000);
 
