@@ -19,6 +19,7 @@ export class NavPage {
   @ViewChild('directionsPanel') directionsPanel: ElementRef;
   map: any;
   Sign: string = '';
+  Length: number = 0;
   // map: any;
   constructor(private bluetoothSerial: BluetoothSerial, public navCtrl: NavController, public geolocation: Geolocation) {
     bluetoothSerial.enable();
@@ -77,7 +78,7 @@ export class NavPage {
 
       }
 
-    startNavigating(){
+    startNavigating(num){
         // let that = this;
         this.geolocation.getCurrentPosition().then((position) => {
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -93,28 +94,29 @@ export class NavPage {
         directionsDisplay.setPanel(this.directionsPanel.nativeElement);
         setTimeout(function () {
           let that = this;
-          console.log(document.getElementsByClassName('adp-stepicon')[0].getElementsByTagName('div')[0].className);
-          var temp = document.getElementsByClassName('adp-stepicon')[0].getElementsByTagName('div')[0].className;
-
+          console.log(document.getElementsByClassName('adp-stepicon')[num].getElementsByTagName('div')[0].className);
+          var temp = document.getElementsByClassName('adp-stepicon')[num].getElementsByTagName('div')[0].className;
+          console.log();
+          that.Sign = '';
           if (temp == 'adp-maneuver') {
             console.log ("No SIGN");
-            that.sign = "no";
-            console.log(that.sign);
-            that.sign = '';
+            that.Sign = "no";
+            console.log(that.Sign);
+
           }
           else if (temp == 'adp-turn-left adp-maneuver' || 'adp-turn-slight-left adp-maneuver') {
             console.log ("left");
-            that.sign = "left";
-            console.log(that.sign);
-            that.sign = '';
+            that.Sign = "left";
+            console.log(that.Sign);
+
           }
           else if (temp == 'adp-turn-right adp-maneuver' || 'adp-turn-slight-right adp-maneuver') {
             console.log ("right");
-            that.sign = "right";
-            console.log(that.sign);
-            that.sign = '';
+            that.Sign = "right";
+            console.log(that.Sign);
+
           }
-        }, 500);
+        }, 600);
 
         // console.log(this.directionsPanel.nativeElement);
         // setTimeout(this.console(), 60000);
@@ -152,31 +154,49 @@ console() {
 
 startCycling(){
   let that = this;
-  this.startNavigating();
-  if (this.sign == "no") {
+  this.startNavigating(0);
+  if (this.Sign == "no") {
     this.goStraight();
   }
-  else if (this.sign == "left") {
+  else if (this.Sign == "left") {
     this.goLeft();
   }
-  else if (this.sign == "right") {
+  else if (this.Sign == "right") {
     this.goRight();
   }
-  setInterval(function (this) {
-    that.startNavigating();
 
-    console.log(this.sign);
-    if (this.sign == "no") {
-      that.goStraight();
-    }
-    else if (this.sign == "left") {
-      that.goLeft();
-    }
-    else if (this.sign == "right") {
-      that.goRight();
-    }
-  }, 10000);
-}
+  setTimeout(function (this) {
+    this.Length = document.getElementsByClassName('adp-stepicon').length;
+    console.log(this.Length);
+  }, 6000);
+
+  var num = 1;
+
+    var Interval = setInterval(function (this) {
+      console.log(num);
+      that.startNavigating(num);
+
+      console.log(this.Sign);
+      if (this.Sign == "no") {
+        that.goStraight();
+      }
+      else if (this.Sign == "left") {
+        that.goLeft();
+      }
+      else if (this.Sign == "right") {
+        that.goRight();
+      }
+      num++;
+
+      if(num == this.Length-1){
+       clearInterval(Interval);
+      }
+    }, 10000);
+
+  }
+
+
+
 
 success = (data) => {console.log("success");}
 fail = (error) => console.log("err");
