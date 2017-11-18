@@ -135,8 +135,8 @@ export class NavPage {
         this.Str = position.coords.latitude+", "+position.coords.longitude;
 
         directionsService.route({
-            origin: '37.77, -122.447',
-            destination: '37.768, -122.511',
+            origin: '40.758557, -73.765437',
+            destination: '40.769776, -73.839077',
             travelMode: google.maps.TravelMode['BICYCLING']
         }, (res, status) => {
 
@@ -165,15 +165,8 @@ console() {
 startCycling(){
   let that = this;
   this.startNavigating(0);
-  if (this.Sign == "no") {
-    this.goStraight();
-  }
-  else if (this.Sign == "left") {
-    this.goLeft();
-  }
-  else if (this.Sign == "right") {
-    this.goRight();
-  }
+
+  this.goStraight();
 
   setTimeout(function (this) {
     this.Length = document.getElementsByClassName('adp-stepicon').length;
