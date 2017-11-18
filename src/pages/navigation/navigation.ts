@@ -20,6 +20,7 @@ export class NavPage {
   map: any;
   Sign: string = '';
   Length: number = 0;
+  inner: any;
   // map: any;
   constructor(private bluetoothSerial: BluetoothSerial, public navCtrl: NavController, public geolocation: Geolocation) {
     bluetoothSerial.enable();
@@ -79,6 +80,8 @@ export class NavPage {
       }
 
     startNavigating(num){
+      this.inner = '';
+
         // let that = this;
         this.geolocation.getCurrentPosition().then((position) => {
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -89,29 +92,31 @@ export class NavPage {
 
         let directionsService = new google.maps.DirectionsService;
         let directionsDisplay = new google.maps.DirectionsRenderer;
-
         directionsDisplay.setMap(this.map);
         directionsDisplay.setPanel(this.directionsPanel.nativeElement);
         setTimeout(function () {
           let that = this;
           console.log(document.getElementsByClassName('adp-stepicon')[num].getElementsByTagName('div')[0].className);
-          var temp = document.getElementsByClassName('adp-stepicon')[num].getElementsByTagName('div')[0].className;
+          var temp = document.getElementsByClassName('adp-stepicon')[num].getElementsByTagName('div')[0].className.replace(" ", "").substring(9,17);
           console.log(temp);
           that.Sign = '';
-          if (temp == "adp-maneuver") {
+          if (temp == "") {
+            console.log("do nothing here!");
+          }
+          else if (temp == "ver") {
             console.log ("No SIGN");
             that.Sign = "no";
             console.log(that.Sign);
 
           }
-          else if (temp == "adp-turn-right adp-maneuver" || "adp-turn-slight-right adp-maneuver") {
+          else if (temp == "rightadp") {
             console.log ("right");
             that.Sign = "right";
             console.log(that.Sign);
 
           }
 
-          else if (temp == "adp-turn-left adp-maneuver" || "adp-turn-slight-left adp-maneuver") {
+          else if (temp == "leftadp-") {
             console.log ("left");
             that.Sign = "left";
             console.log(that.Sign);
@@ -181,7 +186,7 @@ startCycling(){
       console.log(num);
       that.startNavigating(num);
 
-      console.log(this.Sign);
+      // console.log(this.Sign);
       if (this.Sign == "no") {
         that.goStraight();
       }
