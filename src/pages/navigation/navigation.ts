@@ -25,6 +25,9 @@ export class NavPage {
     this.loadMap();
     // this.startNavigating();
     }
+  ionViewDidEnter() {
+    this.loadMap();
+  }
 
     loadMap(){
       this.geolocation.getCurrentPosition().then((position) => {
@@ -86,17 +89,19 @@ export class NavPage {
 
         directionsDisplay.setMap(this.map);
         directionsDisplay.setPanel(this.directionsPanel.nativeElement);
+        console.log(this.directionsPanel.nativeElement);
 
         this.Str = position.coords.latitude+", "+position.coords.longitude;
 
         directionsService.route({
-            origin: this.Str,
-            destination: this.Destination,
+            origin: '51.5033640, -0.1276250',
+            destination: '51.5033640, 0.1276250',
             travelMode: google.maps.TravelMode['DRIVING']
         }, (res, status) => {
 
             if(status == google.maps.DirectionsStatus.OK){
                 directionsDisplay.setDirections(res);
+                // console.log(res);
             } else {
                 console.warn(status);
             }
