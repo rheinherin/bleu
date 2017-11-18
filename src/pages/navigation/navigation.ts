@@ -96,26 +96,31 @@ export class NavPage {
           let that = this;
           console.log(document.getElementsByClassName('adp-stepicon')[num].getElementsByTagName('div')[0].className);
           var temp = document.getElementsByClassName('adp-stepicon')[num].getElementsByTagName('div')[0].className;
-          console.log();
+          console.log(temp);
           that.Sign = '';
-          if (temp == 'adp-maneuver') {
+          if (temp == "adp-maneuver") {
             console.log ("No SIGN");
             that.Sign = "no";
             console.log(that.Sign);
 
           }
-          else if (temp == 'adp-turn-left adp-maneuver' || 'adp-turn-slight-left adp-maneuver') {
-            console.log ("left");
-            that.Sign = "left";
-            console.log(that.Sign);
-
-          }
-          else if (temp == 'adp-turn-right adp-maneuver' || 'adp-turn-slight-right adp-maneuver') {
+          else if (temp == "adp-turn-right adp-maneuver" || "adp-turn-slight-right adp-maneuver") {
             console.log ("right");
             that.Sign = "right";
             console.log(that.Sign);
 
           }
+
+          else if (temp == "adp-turn-left adp-maneuver" || "adp-turn-slight-left adp-maneuver") {
+            console.log ("left");
+            that.Sign = "left";
+            console.log(that.Sign);
+
+          }
+          else {
+
+          }
+
         }, 600);
 
         // console.log(this.directionsPanel.nativeElement);
@@ -127,7 +132,7 @@ export class NavPage {
         directionsService.route({
             origin: '37.77, -122.447',
             destination: '37.768, -122.511',
-            travelMode: google.maps.TravelMode['DRIVING']
+            travelMode: google.maps.TravelMode['BICYCLING']
         }, (res, status) => {
 
             if(status == google.maps.DirectionsStatus.OK){
@@ -188,8 +193,10 @@ startCycling(){
       }
       num++;
 
-      if(num == this.Length-1){
+      if(num > this.Length){
        clearInterval(Interval);
+       console.log("END");
+       that.endNavigation();
       }
     }, 10000);
 
@@ -210,6 +217,12 @@ goLeft(this) {
 }
 goRight(this) {
   this.bluetoothSerial.write('c', this.success, this.fail);
+
+
+}
+
+endNavigation(this) {
+  this.bluetoothSerial.write('e', this.success, this.fail);
 
 
 }
