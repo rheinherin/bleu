@@ -32,9 +32,9 @@ export class NavPage {
     this.loadMap();
     // this.startNavigating();
     }
-  ionViewDidEnter() {
-    this.loadMap();
-  }
+  // ionViewDidEnter() {
+  //   this.loadMap();
+  // }
 
     loadMap(){
       this.geolocation.getCurrentPosition().then((position) => {
