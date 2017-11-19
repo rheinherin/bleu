@@ -195,26 +195,7 @@ startCycling(){
   var num = 1;
 
     var Interval = setInterval(function (this) {
-      console.log(num);
-      that.startNavigating(num);
-
-      // console.log(this.Sign);
-      setTimeout(function (this) {
-
-        if (this.Sign == "no") {
-          that.goStraight();
-        }
-        else if (this.Sign == "left") {
-          that.goLeft();
-        }
-        else if (this.Sign == "right") {
-          that.goRight();
-        }
-        num++;
-      }, 6000);
-
-
-      if(num > this.Length){
+      if(num >= this.Length){
        clearInterval(Interval);
        console.log("END");
        that.endNavigation();
@@ -224,6 +205,26 @@ startCycling(){
        this.Time = resDate;
        that.data.paramData = this.Time;
       }
+      else {
+        console.log(num);
+        that.startNavigating(num);
+
+        // console.log(this.Sign);
+        setTimeout(function (this) {
+
+          if (this.Sign == "no") {
+            that.goStraight();
+          }
+          else if (this.Sign == "left") {
+            that.goLeft();
+          }
+          else if (this.Sign == "right") {
+            that.goRight();
+          }
+          num++;
+        }, 6000);
+      }
+
     }, 10000);
 
   }
