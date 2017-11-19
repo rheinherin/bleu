@@ -154,6 +154,11 @@ export class NavPage {
   }, (err) => {
     console.log(err);
   });
+  //use below for geolocaton
+  // origin: toString(position.coords.latitude)+", "+toString(position.coords.longitude),
+  // destination: toString(this.Destination),
+
+
 }
 console() {
   // console.log(this.directionsPanel.nativeElement.getElementsByClassName('adp-stepicon'));
@@ -171,11 +176,20 @@ startCycling(){
   let that = this;
   this.startNavigating(0);
 
-  this.goStraight();
+  // this.goStraight();
 
   setTimeout(function (this) {
     this.Length = document.getElementsByClassName('adp-stepicon').length;
     console.log(this.Length);
+    if (this.Sign == "no") {
+      that.goStraight();
+    }
+    else if (this.Sign == "left") {
+      that.goLeft();
+    }
+    else if (this.Sign == "right") {
+      that.goRight();
+    }
   }, 6000);
 
   var num = 1;
@@ -185,16 +199,20 @@ startCycling(){
       that.startNavigating(num);
 
       // console.log(this.Sign);
-      if (this.Sign == "no") {
-        that.goStraight();
-      }
-      else if (this.Sign == "left") {
-        that.goLeft();
-      }
-      else if (this.Sign == "right") {
-        that.goRight();
-      }
-      num++;
+      setTimeout(function (this) {
+
+        if (this.Sign == "no") {
+          that.goStraight();
+        }
+        else if (this.Sign == "left") {
+          that.goLeft();
+        }
+        else if (this.Sign == "right") {
+          that.goRight();
+        }
+        num++;
+      }, 6000);
+
 
       if(num > this.Length){
        clearInterval(Interval);
